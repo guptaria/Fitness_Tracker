@@ -19,10 +19,7 @@ app.use(logger("dev"));
 app.use(express.static("public"));
 
 // Setting up the connection
-
-mongoose.connect("mongodb://localhost/WorkoutTracker", {
-  useNewUrlParser: "true",
-})
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fittrack", {useNewUrlParser: true});
 mongoose.connection.on("error", err => {
   console.log("err", err)
 })
