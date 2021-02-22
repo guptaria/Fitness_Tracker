@@ -20,15 +20,15 @@ app.use(express.static("public"));
 
 // Setting up the connection
 
-   mongoose.connect(
-     process.env.MONGODB_URI || 'mongodb://localhost/WorkoutTracker',
-     {
-       useNewUrlParser: true,
-       useUnifiedTopology: true,
-       useCreateIndex: true,
-       useFindAndModify: false
-     }
-   );
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/WorkoutTracker',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
 
 // Routes
 
@@ -37,8 +37,7 @@ require("./routes/htmlRoute.js")(app);
 
 //starting our Express app
 
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
+});
 
-  
