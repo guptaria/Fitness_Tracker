@@ -3,10 +3,17 @@ var db = require('../models');
 module.exports = function (app) {
 
     app.get("/api/workouts", (req, res) => {
-        db.Workout.find({}, (err, data) => {
-            if (err) return err;
-            else res.json(data);
-        });
+
+        db.Workout.aggregate([
+            {
+                $addFields: {
+                    totalDuration: { $sum: "$exercises.duration" }
+                }
+            }]).then((data) => {
+                res.json(data);
+            }).catch((error) => {
+                res.sendStatus(500).json(error);
+            });
     });
 
     app.post("/api/workouts", (req, res) => {
@@ -25,8 +32,8 @@ module.exports = function (app) {
     });
 
     app.put("/api/workouts/:id", (req, res) => {
-        db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body}},(err,data)=>{
-            if(err) return err;
+        db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body } }, (err, data) => {
+            if (err) return err;
             else res.json(data);
         })
     });
@@ -38,24 +45,5 @@ module.exports = function (app) {
             else res.json(data);
         });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 };

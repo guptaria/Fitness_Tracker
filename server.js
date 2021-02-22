@@ -20,12 +20,12 @@ app.use(express.static("public"));
 
 // Setting up the connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/WorkoutTracker", {useNewUrlParser: true});
-mongoose.connection.on("error", err => {
-  console.log("err", err)
-})
-mongoose.connection.on("connected", (err, res) => {
-  console.log("mongoose is connected")
-});
+// mongoose.connection.on("error", err => {
+//   console.log("err", err)
+// })
+// mongoose.connection.on("connected", (err, res) => {
+//   console.log("mongoose is connected")
+// });
 
 // Routes
 
