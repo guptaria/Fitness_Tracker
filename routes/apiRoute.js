@@ -40,10 +40,16 @@ module.exports = function (app) {
 
 
     app.get("/api/workouts/range", (req, res) => {
-        db.Workout.find({}, (err, data) => {
-            if (err) return err;
-            else res.json(data);
-        });
+        db.Workout.aggregate([
+            {
+                $addFields: {
+                    totalDuration: { $sum: "$exercises.duration" }
+                }
+            }]).then((data) => {
+                res.json(data);
+            }).catch((error) => {
+                res.sendStatus(500).json(error);
+            });
     });
 
 };
