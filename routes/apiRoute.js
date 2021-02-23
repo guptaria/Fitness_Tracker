@@ -45,11 +45,15 @@ module.exports = function (app) {
                 $addFields: {
                     totalDuration: { $sum: "$exercises.duration" }
                 }
-            }]).then((data) => {
-                res.json(data);
-            }).catch((error) => {
-                res.sendStatus(500).json(error);
-            });
+            },
+            { $limit: 7 }
+        ]).then((data) => {
+            res.json(data);
+        }).catch((error) => {
+            res.sendStatus(500).json(error);
+        });
     });
 
 };
+
+
